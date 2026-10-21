@@ -1,38 +1,49 @@
 const SUPABASE_URL = 'https://xuwucwkhzvgbsrpoxozl.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_5dShhUST6_TKxO9UGMmflg_GDOOfOC7';
 const FUNCTION_URL = `${SUPABASE_URL}/functions/v1`;
+
 const urlParams = new URLSearchParams(window.location.search);
 const utmSource = urlParams.get('utm_source');
 const utmMedium = urlParams.get('utm_medium');
 const utmCampaign = urlParams.get('utm_campaign');
+
 async function enviarEvento(tipo_evento, detalles = {}, registro_id = null) {
     try {
         await fetch(`${FUNCTION_URL}/tracking`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            },
             body: JSON.stringify({ registro_id, tipo_evento, detalles })
         });
     } catch (error) {
         console.error('Error tracking:', error);
     }
 }
+
+// Registrar visita inicial
 enviarEvento('page_view', {
     utm_source: utmSource,
     utm_medium: utmMedium,
     utm_campaign: utmCampaign,
     referrer: document.referrer
 });
+
 function mostrarTerminos() {
     document.getElementById('modalTerminos').style.display = 'block';
     enviarEvento('view_terms');
 }
+
 function cerrarTerminos() {
     document.getElementById('modalTerminos').style.display = 'none';
 }
+
 window.onclick = function(event) {
     const modal = document.getElementById('modalTerminos');
     if (event.target === modal) modal.style.display = 'none';
 }
+
 document.getElementById('registroForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const mensajeDiv = document.getElementById('mensaje');
@@ -52,7 +63,10 @@ document.getElementById('registroForm').addEventListener('submit', async functio
     try {
         const response = await fetch(`${FUNCTION_URL}/registrar`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            },
             body: JSON.stringify(data)
         });
         
@@ -73,16 +87,19 @@ document.getElementById('registroForm').addEventListener('submit', async functio
         mensajeDiv.className = 'mensaje error';
         mensajeDiv.textContent = 'Error de conexión. Intenta nuevamente.';
         mensajeDiv.style.display = 'block';
+        console.error('Error:', error);
     } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Acceder a la Plataforma';
     }
 });
+
 document.querySelectorAll('.btn-hero, .nav-cta, .course-card').forEach(el => {
     el.addEventListener('click', () => {
         enviarEvento('link_clicked', { elemento: el.className || el.tagName });
     });
 });
+
 let maxScroll = 0;
 window.addEventListener('scroll', () => {
     const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
