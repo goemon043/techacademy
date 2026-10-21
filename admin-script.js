@@ -1,16 +1,19 @@
 const SUPABASE_URL = 'https://xuwucwkhzvgbsrpoxozl.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_5dShhUST6_TKxO9UGMmflg_GDOOfOC7';
 const FUNCTION_URL = `${SUPABASE_URL}/functions/v1`;
+
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const usuario = document.getElementById('usuario').value;
     const password = document.getElementById('password').value;
     
+    // Nota de seguridad: En un proyecto real, nunca hardcodees contraseñas ni las compartas.
+    // Para este simulacro académico está bien, pero es una buena práctica cambiarla luego.
     if (usuario === 'Mateo123*' && password === 'HoySeComePollito597*') {
         document.getElementById('loginSection').style.display = 'none';
         document.getElementById('dashboardSection').style.display = 'block';
         cargarDatos();
-        setInterval(cargarDatos, 30000);
+        setInterval(cargarDatos, 30000); // Actualiza cada 30 segundos
     } else {
         const msg = document.getElementById('loginMensaje');
         msg.textContent = 'Credenciales inválidas';
@@ -21,13 +24,27 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 
 async function cargarDatos() {
     try {
-        const statsRes = await fetch(`${FUNCTION_URL}/admin-stats`);
+        // 1. Obtener estadísticas CON el header de autorización
+        const statsRes = await fetch(`${FUNCTION_URL}/admin-stats`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            }
+        });
         const stats = await statsRes.json();
-        document.getElementById('totalRegistros').textContent = stats.total_registros;
-        document.getElementById('registrosHoy').textContent = stats.registros_hoy;
-        document.getElementById('usuariosApp').textContent = stats.usuarios_app_movil;
-        document.getElementById('porcentajeApp').textContent = `${stats.porcentaje_app}%`;
-        const regRes = await fetch(`${FUNCTION_URL}/admin-registros`);
+        
+        document.getElementById('totalRegistros').textContent = stats.total_registros || 0;
+        document.getElementById('registrosHoy').textContent = stats.registros_hoy || 0;
+        document.getElementById('usuariosApp').textContent = stats.usuarios_app_movil || 0;
+        document.getElementById('porcentajeApp').textContent = `${stats.porcentaje_app || 0}%`;
+
+        // 2. Obtener registros detallados CON el header de autorización
+        const regRes = await fetch(`${FUNCTION_URL}/admin-registros`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            }
+        });
         const registros = await regRes.json();
         const tbody = document.getElementById('tablaBody');
         tbody.innerHTML = '';
@@ -63,10 +80,12 @@ function exportarDatos() {
         const cells = Array.from(row.querySelectorAll('td'));
         csv += cells.map(c => `"${c.textContent}"`).join(',') + '\n';
     });
-    const blob = new Blob([csv], { type: 'text/csv' });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = `registros_${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
 }
