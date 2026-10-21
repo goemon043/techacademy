@@ -211,8 +211,10 @@ footer { background: var(--bg-panel); border-top: 1px solid var(--border-color);
 .modal-content h2 { color: var(--neon-green); margin-bottom: 2rem; text-transform: uppercase; }
 .close { color: var(--neon-green); float: right; font-size: 2rem; font-weight: bold; cursor: pointer; }
 .close:hover { text-shadow: var(--glow); }
-.terminos-texto { line-height: 1.8; color: var(--text-main);text-align: justify; }
-.terminos-texto h3 { margin-top: 2rem; margin-bottom: 1rem; color: var(--neon-green); text-transform: uppercase; }
+.terminos-texto { line-height: 1.8; color: var(--text-main); text-align: justify; }
+.terminos-texto h3 { margin-top: 2rem; margin-bottom: 1rem; color: var(--neon-green); text-transform: uppercase; font-size: 1.1rem; letter-spacing: 1px; }
+.terminos-texto ul { margin-left: 20px; margin-bottom: 1.5rem; }
+.terminos-texto li { margin-bottom: 0.5rem; }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 10px; }
@@ -220,11 +222,195 @@ footer { background: var(--bg-panel); border-top: 1px solid var(--border-color);
 ::-webkit-scrollbar-thumb { background: var(--border-color); }
 ::-webkit-scrollbar-thumb:hover { background: var(--neon-green); }
 
-/* Responsive */
-@media (max-width: 968px) { 
-    .registration-container { grid-template-columns: 1fr; } 
-    .instructor-content { grid-template-columns: 1fr; }
-    .hero-title { font-size: 2.5rem; } 
-    .trust-indicators { flex-direction: column; gap: 2rem; } 
-    .footer-content { grid-template-columns: 1fr; } 
+/* ============================================
+   MEDIA QUERIES - RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablets y pantallas medianas (768px - 1024px) */
+@media (max-width: 1024px) {
+    .hero-title { font-size: 2.8rem; }
+    .hero-subtitle { font-size: 1.1rem; }
+    .registration-container { gap: 2rem; }
+    .instructor-content { gap: 2rem; }
+}
+
+/* Tablets pequeñas y móviles grandes (768px) */
+@media (max-width: 768px) {
+    /* Navbar */
+    .nav-container { padding: 1rem; flex-wrap: wrap; }
+    .nav-menu { gap: 1rem; font-size: 0.9rem; }
+    .nav-cta { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+    
+    /* Hero */
+    .hero-section { min-height: 500px; }
+    .hero-content { padding: 2rem 1rem; }
+    .hero-title { font-size: 2rem; }
+    .hero-subtitle { font-size: 1rem; margin-bottom: 2rem; }
+    .hero-badge { font-size: 0.75rem; padding: 0.4rem 1rem; }
+    .btn-hero { padding: 0.8rem 2rem; font-size: 1rem; }
+    
+    .trust-indicators { 
+        flex-direction: column; 
+        gap: 2rem; 
+        margin-top: 2rem; 
+        padding-top: 2rem; 
+    }
+    .trust-number { font-size: 2rem; }
+    
+    /* Container */
+    .container { padding: 0 1rem; }
+    main { padding: 3rem 0; }
+    
+    /* Section Headers */
+    .section-header { margin-bottom: 2.5rem; }
+    .section-header h2 { font-size: 1.8rem; }
+    .section-header p { font-size: 1rem; }
+    
+    /* Courses */
+    .courses-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .course-card { padding: 1.5rem; }
+    .course-card h3 { font-size: 1.3rem; }
+    
+    /* Benefits */
+    .benefits-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .benefit-item { padding: 1.5rem; }
+    .benefit-icon { width: 50px; height: 50px; font-size: 1.2rem; }
+    
+    /* Instructor */
+    .instructor-section { margin-bottom: 4rem; }
+    .instructor-content { 
+        grid-template-columns: 1fr; 
+        gap: 2rem; 
+    }
+    .instructor-info h3 { font-size: 1.5rem; }
+    .credentials { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    
+    /* Registration */
+    .registration-section { padding: 2rem 1rem; }
+    .registration-container { 
+        grid-template-columns: 1fr; 
+        gap: 2rem; 
+    }
+    .registration-info h2 { font-size: 1.8rem; }
+    .registration-info > p { font-size: 1rem; }
+    
+    .registration-form-container { padding: 2rem 1.5rem; }
+    .form-header h3 { font-size: 1.5rem; }
+    
+    /* Footer */
+    .footer-content { 
+        grid-template-columns: 1fr; 
+        gap: 2rem; 
+        padding: 0 1rem; 
+    }
+    footer { padding: 3rem 0 1.5rem; margin-top: 4rem; }
+    
+    /* Modal */
+    .modal-content { 
+        margin: 10% auto; 
+        padding: 2rem 1.5rem; 
+        width: 95%; 
+    }
+    .modal-content h2 { font-size: 1.5rem; }
+}
+
+/* Móviles pequeños (480px) */
+@media (max-width: 480px) {
+    /* Navbar */
+    .nav-container { padding: 0.8rem; }
+    .logo-text { font-size: 1.2rem; }
+    .logo-pro { font-size: 0.65rem; }
+    .nav-menu { gap: 0.5rem; font-size: 0.8rem; }
+    .nav-menu a { padding: 0.3rem; }
+    .nav-cta { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    
+    /* Hero */
+    .hero-section { min-height: 450px; }
+    .hero-content { padding: 1.5rem 1rem; }
+    .hero-title { font-size: 1.6rem; letter-spacing: 0.5px; }
+    .hero-subtitle { font-size: 0.9rem; }
+    .hero-badge { font-size: 0.7rem; padding: 0.3rem 0.8rem; }
+    .btn-hero { padding: 0.7rem 1.5rem; font-size: 0.9rem; letter-spacing: 1px; }
+    
+    .trust-number { font-size: 1.8rem; }
+    .trust-label { font-size: 0.75rem; }
+    
+    /* Container */
+    main { padding: 2rem 0; }
+    
+    /* Section Headers */
+    .section-header { margin-bottom: 2rem; }
+    .section-header h2 { font-size: 1.5rem; letter-spacing: 1px; }
+    .section-header p { font-size: 0.9rem; }
+    
+    /* Courses */
+    .course-card { padding: 1.2rem; }
+    .course-card h3 { font-size: 1.1rem; }
+    .course-card p { font-size: 0.9rem; }
+    .course-meta { flex-direction: column; gap: 0.5rem; font-size: 0.8rem; }
+    
+    /* Benefits */
+    .benefits-grid { grid-template-columns: 1fr; }
+    .benefit-item { padding: 1.2rem; }
+    .benefit-item h3 { font-size: 1.1rem; }
+    .benefit-item p { font-size: 0.85rem; }
+    
+    /* Instructor */
+    .instructor-info h3 { font-size: 1.3rem; }
+    .instructor-info p { font-size: 0.9rem; }
+    .credentials { grid-template-columns: 1fr; }
+    .credential-item { padding: 1rem; }
+    
+    /* Registration */
+    .registration-section { padding: 1.5rem 0.8rem; }
+    .registration-info h2 { font-size: 1.5rem; }
+    .registration-info > p { font-size: 0.9rem; }
+    .benefits-list li { font-size: 0.9rem; padding: 0.5rem 0; padding-left: 1.5rem; }
+    
+    .registration-form-container { padding: 1.5rem 1rem; }
+    .form-header h3 { font-size: 1.3rem; }
+    .form-header p { font-size: 0.85rem; }
+    
+    .form-group label { font-size: 0.8rem; }
+    .form-group input, .form-group select { 
+        padding: 0.7rem 0.8rem; 
+        font-size: 0.9rem; 
+    }
+    .form-group small { font-size: 0.75rem; }
+    
+    .btn-primary { 
+        padding: 0.9rem; 
+        font-size: 1rem; 
+        letter-spacing: 1px; 
+    }
+    
+    .testimonial { padding: 1.5rem; }
+    .testimonial p { font-size: 0.9rem; }
+    
+    /* Footer */
+    footer { padding: 2rem 0 1rem; margin-top: 3rem; }
+    .footer-section h4 { font-size: 1rem; }
+    .footer-section p { font-size: 0.85rem; }
+    .footer-bottom p { font-size: 0.75rem; }
+    
+    /* Modal */
+    .modal-content { 
+        margin: 5% auto; 
+        padding: 1.5rem 1rem; 
+        width: 98%; 
+    }
+    .modal-content h2 { font-size: 1.2rem; margin-bottom: 1rem; }
+    .close { font-size: 1.5rem; }
+    .terminos-texto h3 { font-size: 0.95rem; }
+    .terminos-texto p { font-size: 0.85rem; }
+}
+
+/* Móviles muy pequeños (360px) */
+@media (max-width: 360px) {
+    .hero-title { font-size: 1.4rem; }
+    .hero-subtitle { font-size: 0.85rem; }
+    .nav-menu { font-size: 0.75rem; }
+    .section-header h2 { font-size: 1.3rem; }
+    .registration-info h2 { font-size: 1.3rem; }
+    .form-header h3 { font-size: 1.1rem; }
 }
