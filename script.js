@@ -74,7 +74,7 @@ document.getElementById('registroForm').addEventListener('submit', async functio
         
         if (response.ok) {
             mensajeDiv.className = 'mensaje exito';
-            mensajeDiv.innerHTML = `<p><strong>Registro exitoso</strong></p><p style="margin-top:10px;">Recibirás un correo con tus credenciales en los próximos minutos.</p>`;
+            mensajeDiv.innerHTML = `<p><strong>Registro exitoso</strong></p><p style="margin-top:10px;">Recibirás un correo con tus credenciales en los próximos dias.</p>`;
             mensajeDiv.style.display = 'block';
             this.reset();
             mensajeDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
