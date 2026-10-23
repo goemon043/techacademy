@@ -22,7 +22,6 @@ async function enviarEvento(tipo_evento, detalles = {}, registro_id = null) {
     }
 }
 
-// Registrar visita inicial
 enviarEvento('page_view', {
     utm_source: utmSource,
     utm_medium: utmMedium,
@@ -60,6 +59,16 @@ document.getElementById('registroForm').addEventListener('submit', async functio
         acepto_terminos: document.getElementById('terminos').checked
     };
     
+    const regexSoloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+    if (!regexSoloLetras.test(data.nombre) || !regexSoloLetras.test(data.apellido)) {
+        mensajeDiv.className = 'mensaje error';
+        mensajeDiv.textContent = 'Error: El nombre y apellido solo pueden contener letras (sin números ni símbolos).';
+        mensajeDiv.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Acceder a la Plataforma';
+        return;
+    }
+    
     try {
         const response = await fetch(`${FUNCTION_URL}/registrar`, {
             method: 'POST',
@@ -74,7 +83,7 @@ document.getElementById('registroForm').addEventListener('submit', async functio
         
         if (response.ok) {
             mensajeDiv.className = 'mensaje exito';
-            mensajeDiv.innerHTML = `<p><strong>Registro exitoso</strong></p><p style="margin-top:10px;">Recibirás un correo con tus credenciales en los próximos dias.</p>`;
+            mensajeDiv.innerHTML = `<p><strong>Registro exitoso</strong></p><p style="margin-top:10px;">Recibirás un correo con tus credenciales en los próximos minutos.</p>`;
             mensajeDiv.style.display = 'block';
             this.reset();
             mensajeDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
